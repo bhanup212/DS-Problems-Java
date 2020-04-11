@@ -9,12 +9,12 @@ public class LinkedList {
         Node(int d){data = d;}
     }
 
-    public void printAllNodes(){
+    public static void printAllNodes(Node head){
         Node current = head;
         while (current != null){
-            System.out.println("value is:"+current.data);
-            Node next = current.next;
-            current = next;
+            System.out.print(" "+current.data);
+            //Node next = current.next;
+            current = current.next;
         }
     }
     public int getSize(){
@@ -131,7 +131,7 @@ public class LinkedList {
     /**
      * printing middle elements from linkedlist
      */
-    public void middleElement(){
+    public static Node middleElement(Node head){
         Node slow_ptr = head;
         Node fast_ptr = head;
 
@@ -140,6 +140,7 @@ public class LinkedList {
             fast_ptr = fast_ptr.next.next;
         }
         System.out.println("Middle element is: "+slow_ptr.data);
+        return slow_ptr;
     }
     /**
      * finding middle element by iterative or recursive approach
@@ -157,7 +158,7 @@ public class LinkedList {
     /**
      * reverse a linked list
      */
-    public void reverse(){
+    public static Node reverse(Node head){
         Node prev = null;
         Node current = head;
         Node next = null;
@@ -168,6 +169,7 @@ public class LinkedList {
           current = next;
         }
         head = prev;
+        return head;
     }
     /**
      * reverse a linked list using recursive mode
@@ -189,6 +191,43 @@ public class LinkedList {
         }
         printReverse(node.next);
         System.out.println(node.data+" ");
+    }
+    public static void reorderList(Node head) {
+        Node middle = middleElement(head);
+        Node head2 = reverse(middle.next);
+        middle.next = null;
+        while(head != null && head2 != null ){
+            Node temp = head.next;
+            Node temp2 = head2.next;
+            head2.next = head.next;
+            head.next = head2;
+            head = temp;
+            head2 = temp2;
+        }
+
+    }
+    public static Node reverseKGroup(Node head, int k) {
+        Node prev=null,current = head,next;
+
+        int n = 0;
+        while(current != null && n<k){
+            next = current.next;
+
+            if(n == k-1){
+                current.next = next;
+            }else{
+                current.next = prev;
+            }
+            prev = current;
+            current = next;
+            System.out.println("");
+            System.out.println("prev: "+prev.data);
+            System.out.println("current: "+current.data);
+            System.out.println("next: "+current.next.data);
+            n++;
+        }
+        head = prev;
+        return head;
     }
 
 }
